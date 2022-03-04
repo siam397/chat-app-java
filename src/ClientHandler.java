@@ -24,6 +24,8 @@ public class ClientHandler implements Runnable {
     }
 
     private void broadcastMessage(String message) {
+
+
         for(ClientHandler clientHandler:clientHandlers){
             try{
                 if(!clientHandler.username.equals(username)){
@@ -34,6 +36,21 @@ public class ClientHandler implements Runnable {
             }catch (IOException e){
                 closeEverything(socket,bufferedReader,bufferedWriter);
             }
+        }
+    }
+
+    public void sendToSingleClient(String message,String name){
+        try{
+            for(ClientHandler clientHandler:clientHandlers){
+                if(clientHandler.username.equals(name)){
+                    clientHandler.bufferedWriter.write(username+": "+message);
+                    clientHandler.bufferedWriter.newLine();
+                    clientHandler.bufferedWriter.flush();
+                    break;
+                }
+            }
+        }catch (IOException e){
+            closeEverything(socket,bufferedReader,bufferedWriter);
         }
     }
 
@@ -66,7 +83,12 @@ public class ClientHandler implements Runnable {
         while(socket.isConnected()){
             try{
                 message=bufferedReader.readLine();
-                broadcastMessage(message);
+                String rawMessage= message.split(": ")[1];
+                if(rawMessage.charAt(0)=='@'){
+                    String mention=rawMessage.split(" ")[0];
+                    String name=mention.substring(1);
+                    sendToSingleClient(rawMessage,name);
+                }else broadcastMessage(message);
             }catch (IOException e){
                 closeEverything(socket,bufferedReader,bufferedWriter);
                 break;

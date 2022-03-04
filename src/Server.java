@@ -1,9 +1,10 @@
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
+    private BufferedReader bufferedReader;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -19,10 +20,30 @@ public class Server {
 
                 Thread thread=new Thread(clientHandler);
                 thread.start();
+//                InputStreamReader inputstreamreader = new
+//                        InputStreamReader(socket.getInputStream());
+//
+//                BufferedReader bufferedreader = new
+//                        BufferedReader(inputstreamreader);
+//
+//                PrintWriter printwriter = new
+//                        PrintWriter(socket.getOutputStream(),true);
+//
+//                String line = "";
+//                boolean done = false;
+//                while (((line = bufferedreader.readLine()) != null) &&(!done)){
+//                    System.out.println("Received from Client " + line);
+//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+//                    bufferedWriter.write("Message Sent");
+//                    bufferedWriter.newLine();
+//                    bufferedWriter.flush();
+//                    if (line.compareToIgnoreCase("Exit") == 0) done = true;
+//                }
+
             }
 
         }catch (IOException e){
-
+            closeServerSocket();
         }
     }
 

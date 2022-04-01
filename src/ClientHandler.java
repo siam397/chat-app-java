@@ -25,7 +25,6 @@ public class ClientHandler implements Runnable {
 
     private void broadcastMessage(String message) {
 
-
         for(ClientHandler clientHandler:clientHandlers){
             try{
                 if(!clientHandler.username.equals(username)){
@@ -42,7 +41,7 @@ public class ClientHandler implements Runnable {
     public void sendToSingleClient(String message,String name){
         try{
             for(ClientHandler clientHandler:clientHandlers){
-                if(clientHandler.username.equals(name)){
+                if(clientHandler.username.equals(name) && !clientHandler.username.equals(username)){
                     clientHandler.bufferedWriter.write(username+": "+message);
                     clientHandler.bufferedWriter.newLine();
                     clientHandler.bufferedWriter.flush();
@@ -75,7 +74,6 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void run() {

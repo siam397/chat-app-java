@@ -20,25 +20,6 @@ public class Server {
 
                 Thread thread=new Thread(clientHandler);
                 thread.start();
-//                InputStreamReader inputstreamreader = new
-//                        InputStreamReader(socket.getInputStream());
-//
-//                BufferedReader bufferedreader = new
-//                        BufferedReader(inputstreamreader);
-//
-//                PrintWriter printwriter = new
-//                        PrintWriter(socket.getOutputStream(),true);
-//
-//                String line = "";
-//                boolean done = false;
-//                while (((line = bufferedreader.readLine()) != null) &&(!done)){
-//                    System.out.println("Received from Client " + line);
-//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-//                    bufferedWriter.write("Message Sent");
-//                    bufferedWriter.newLine();
-//                    bufferedWriter.flush();
-//                    if (line.compareToIgnoreCase("Exit") == 0) done = true;
-//                }
 
             }
 
